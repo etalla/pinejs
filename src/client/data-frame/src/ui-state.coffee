@@ -19,7 +19,7 @@ define [
 			
 
 		@fromURI: (uri) ->
-			uri = "'#/data/student.134*view"
+			uri = "#/data/student.134*view"
 			arr = ClientURIParser.matchAll(uri, "expr")
 			console.log uri
 			console.log (JSON.stringify(arr, null, 4))
