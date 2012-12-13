@@ -8,13 +8,16 @@ require({
 		//Developing & building tools
 		'cs'                       :  '../tools/requirejs-plugins/cs',
 		'ometa'                    :  '../tools/requirejs-plugins/ometa',
+		'dust'                     :  '../tools/requirejs-plugins/dust',
 		'text'                     :  '../tools/requirejs-plugins/text',
 		'coffee-script'            :  '../tools/coffee-script',
+		'dust-full'                :  '../tools/dust-full',
 		'has'                      :  '../../tools/has',
 
 		'lib'                      :  '../lib',
 
 		//Libraries
+		'dust-core'                :  '../lib/dust-core',
 		'backbone'                 :  '../lib/backbone',
 		'bootstrap'                :  '../lib/bootstrap/bootstrap',
 		'codemirror'               :  '../lib/codemirror/codemirror',
@@ -38,6 +41,12 @@ require({
 		}
 	],
 	shim: {
+		'dust-core': {
+			exports: 'dust'
+		},
+		'dust-full': {
+			exports: 'dust'
+		},
 		'bootstrap': {
 			deps: ['jquery', 'css!lib/bootstrap/bootstrap']
 		},
