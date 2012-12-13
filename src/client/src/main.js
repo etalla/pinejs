@@ -7,6 +7,7 @@ require({
 	paths: {
 		//Developing & building tools
 		'cs'                       :  '../tools/requirejs-plugins/cs',
+		'cjs'                      :  '../tools/requirejs-plugins/cjs',
 		'ometa'                    :  '../tools/requirejs-plugins/ometa',
 		'dust'                     :  '../tools/requirejs-plugins/dust',
 		'text'                     :  '../tools/requirejs-plugins/text',
@@ -33,6 +34,7 @@ require({
 		'sbvr-compiler'            :  '../../server/src/sbvr-compiler',
 		'Prettify'                 :  '../../common/Prettify',
 		'underscore'               :  '../lib/underscore',
+		'validator'                :  '../lib/validator-min',
 		'js-beautify'              :  '../../external/beautify/beautify'
 	},
 	packages: [
