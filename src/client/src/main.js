@@ -30,6 +30,8 @@ require({
 		'ometa-compiler'           :  '../../external/ometa-js/lib/ometajs/ometa/parsers',
 		'ometa-core'               :  '../../external/ometa-js/lib/ometajs/core',
 		'sbvr-parser'              :  '../../common/sbvr-parser',
+		'sbvr-compiler'            :  '../../server/src/sbvr-compiler',
+		'Prettify'                 :  '../../common/Prettify',
 		'underscore'               :  '../lib/underscore',
 		'js-beautify'              :  '../../external/beautify/beautify'
 	},

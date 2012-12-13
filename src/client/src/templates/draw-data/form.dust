@@ -1,0 +1,17 @@
+<div>
+	<h2>{modelName}</h2>
+	<ul>
+		{#fields}
+			<li>
+				<dl>
+					<dt>Type:</dt> 
+						<dd>{[0]}</dd>
+					<dt>Name:</dt>
+						<dd>{[1]}</dd>
+					<dt>Nullable:</dt>
+						<dd>{[2]}</dd>
+				</dl>
+			</li>
+		{/fields}
+	</ul>
+</div>
