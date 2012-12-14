@@ -1,0 +1,9 @@
+<ol>
+	{#.}
+		{?topLevel}
+			<li class="term" data-resource="{resourceName}">
+				<a href="#">{modelName}</a>
+			</li>
+		{/topLevel}
+	{/.}
+</ol>

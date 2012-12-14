@@ -6,9 +6,9 @@ define([
 	'cs!views/login'
 
 	# Tab subviews
-	'cs!views/tabs/sbvr-editor/main'
-	'cs!views/tabs/sbvr-lf/main'
-	'cs!views/tabs/sbvr-graph/main'
+	#'cs!views/tabs/sbvr-editor/main'
+	#'cs!views/tabs/sbvr-lf/main'
+	#'cs!views/tabs/sbvr-graph/main'
 	'cs!views/tabs/draw-data/main'
 ], (Backbone, $, html, SessionModel, LoginView, tabViews...) ->
 	Backbone.View.extend(

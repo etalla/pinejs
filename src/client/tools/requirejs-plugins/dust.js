@@ -111,7 +111,6 @@ define(['dust-full'], function (dust) {
 					//Do OMeta transform.
 					try {
 						compiled = compileDust(source);
-						console.log(compiled);
 					}
 					catch (err) {
 						err.message = "In " + path + ", " + err.message;
