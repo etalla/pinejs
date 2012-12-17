@@ -3,40 +3,38 @@ define [
 	'cs!../models/term'
 	'cs!../config'
 ], (Backbone, TermModel, config) ->
+
 	Backbone.Collection.extend({
+		
 		url: "#{config.apiRoot}/data/"
+		
 		model: TermModel
-		parse: (raw) ->
-			return (v for own k, v of raw)
+		
+		###
+		Parses the response object and returns an array of model attributes.
+		@param {Object} response
+		@return {Array<Object>}
+		###
+		parse: (response) -> (v for own k, v of response)
+		
+		###
+		Returns an array of Entity models derived from the terms of the vocabulary.
+		@return {Array<Backbone.Model>}
+		###
 		getEntities: ->
-			@models.map((term) ->
-				Backbone.Model.extend({
+			entities = {}
+			for term in @models
+				entities[term.id] = Backbone.Model.extend({
 					idAttribute: term.get('idField')
-					urlRoot: "#{@url}/#{term.get('resourceName')}"
+					urlRoot: "#{@url}#{term.id}"
+					parse: (response) -> response.instances
 					url: ->
 						if @isNew()
-							return "#{@urlRoot}?filter=#{@idAttribute}:#{@id}"
+							return "#{@urlRoot}?"
 						else
-							return @urlRoot
-#					validate: (attrs) ->
-#						console.log "asdsadsad"
-#						for field in term.fields
-#							value = attrs[field[1]]
-#							console.log field, value
-#							if value?
-#								try
-#									type = field[0]
-#									switch type
-#										when "Value"
-#											validator.check(value)
-#										when "Serial"
-#											validator.check(value).min(0).isInteger()
-#										else
-#											console.log("Unknown field type: #{type}")
-#								catch error
-#									return error
-#						return
+							return "#{@urlRoot}?filter=#{@idAttribute}:#{@id}"
+						
 				})
-			)
+			return entities
+				
 	})
-	

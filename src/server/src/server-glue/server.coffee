@@ -15,7 +15,7 @@ define([
 				params: process.env.DATABASE_URL || {
 					host: 'localhost'
 					user: 'root'
-					password: '.'
+					password: ''
 					database: 'rulemotion'
 				}
 		else if has 'USE_POSTGRES'
