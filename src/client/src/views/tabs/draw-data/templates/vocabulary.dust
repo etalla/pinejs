@@ -3,6 +3,7 @@
 		{?topLevel}
 			<li class="term" data-resource="{resourceName}">
 				<a href="#">{modelName}</a>
+				<div class="instances"></div>
 			</li>
 		{/topLevel}
 	{/.}

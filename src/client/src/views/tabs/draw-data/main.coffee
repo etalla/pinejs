@@ -4,12 +4,13 @@ define [
 	'underscore'
 	'cs!./config'
 
-	# Templates
-	'dust!./templates/vocabulary'
-
 	# Test
 	'cs!./collections/vocabulary'
-], (Backbone, $, _, config, vocabTmpl, VocabularyCollection) ->
+
+	# Templates
+	'dust!./templates/vocabulary'
+	'dust!./templates/entity-list'
+], (Backbone, $, _, config, VocabularyCollection, vocabTmpl, entityTmpl) ->
 
 	Backbone.View.extend(
 
@@ -27,17 +28,23 @@ define [
 			@options.title.text(title)
 
 		termClick: (e) ->
-			resourceName = $(e.target).parent().data('resource')
-			Model = @vocabulary.getEntities()[resourceName]
-			model = new Model()
-			model.fetch({
-				id: 1
-			}).done((data) ->
-				console.log model.toJSON()
-			)
-			return			
-			$.get(@root + @vocabulary + resourceName + '?', (data) ->
-				console.log("Resource", resourceName, data)
+			parent = $(e.target).parent()
+			resourceName = parent.data('resource')
+			metaModel = @vocabulary.get(resourceName)
+			MetaModel = metaModel.getModelCollection()
+			list = new MetaModel()
+			list.fetch({
+				parse: false
+			}).done(->
+				entityTmpl({
+					model: metaModel.toJSON()
+					instances: list.toJSON()
+				}, (error, out) ->
+					if error?
+						console.error(error)
+					else
+						$('.instances', parent).html(out)
+				)
 			)
 
 		render: ->
@@ -50,5 +57,4 @@ define [
 						@$el.html(out)
 				)
 			)
-
 	)
