@@ -1,14 +1,14 @@
 define [
 	'backbone'
-	'cs!../models/term'
+	'cs!../models/meta'
 	'cs!../config'
-], (Backbone, TermModel, config) ->
+], (Backbone, MetaModel, config) ->
 
 	Backbone.Collection.extend({
 		
 		url: "#{config.apiRoot}/data/"
 		
-		model: TermModel
+		model: MetaModel
 		
 		###
 		Parses the response object and returns an array of model attributes.

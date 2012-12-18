@@ -1,9 +1,9 @@
 define [
 	'backbone'
-	'cs!./term'
-], (Backbone, TermModel) ->
+	'cs!./meta'
+], (Backbone, MetaModel) ->
 
-	EntityModel = Backbone.Model.extend({
+	DataModel = Backbone.Model.extend({
 		
 		parse: (response) -> response.instances[0]
 		
@@ -17,18 +17,18 @@ define [
 	}, {# static methods
 	
 		###
-		Constructs and returns a new EntityModel class from the specified TermModel instance.
-		@param {TermModel} term
-		@return {EntityModel}
+		Constructs and returns a new DataModel class from the specified MetaModel instance.
+		@param {MetaModel} term
+		@return {DataModel}
 		###
 		fromTerm: (term) ->
-			if term not instanceof TermModel
+			if term not instanceof MetaModel
 				throw new Error("Invalid or unspecified term")
-			return EntityModel.extend({
+			return DataModel.extend({
 				idAttribute: term.get("idField")
 				urlRoot: "#{term.urlRoot}/#{term.id}"
 			})
 
 	})
 	
-	return EntityModel
+	return DataModel

@@ -5,26 +5,27 @@ define [
 	'cs!./config'
 
 	# Test
-	'cs!./collections/vocabulary'
-	'cs!./collections/entity'
+	'cs!./collections/meta'
+	'cs!./collections/data'
 
 	# Templates
 	'dust!./templates/vocabulary'
 	'dust!./templates/entity-list'
 
-], (Backbone, $, _, config, VocabularyCollection, EntityCollection, vocabTmpl, entityTmpl) ->
+], (Backbone, $, _, config, MetaCollection, DataCollection, vocabTmpl, entityTmpl) ->
 
 	Backbone.View.extend(
 
 		initialize: (options = {}) ->
 			Backbone.View::initialize.call(this, options)
-			@vocabulary = new VocabularyCollection([], {
+			@collection = new MetaCollection([], {
 				url: "#{config.apiServer}/data/"
 			})
 			return
 
 		events: {
 			'click .term a' : 'termClick'
+			'click .instances tbody tr' : 'editInstance'
 		}
 
 		setTitle: (title) ->
@@ -35,7 +36,7 @@ define [
 			parent = $(e.target).parent()
 			resourceName = parent.data('resource')
 			term = @vocabulary.get(resourceName)
-			Entities = EntityCollection.fromTerm(term)
+			Entities = DataCollection.fromTerm(term)
 			entities = new Entities()
 			entities.fetch({
 				parse: false
@@ -52,6 +53,10 @@ define [
 			).fail((error) ->
 				console.error(error)
 			)
+			return this
+
+		editInstance: (e) ->
+			console.log e
 			return this
 
 		render: ->
