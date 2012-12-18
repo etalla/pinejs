@@ -1,1 +1,20 @@
-Change me!
+<table>
+	<thead>
+		<tr>
+			{#model.fields}
+				<th>{[1]}</th>
+			{/model.fields}
+		</tr>
+	</thead>
+	<tbody>
+		{#instances fields=model.fields}
+			<tr>
+    			{#fields instance=.}
+        			{#instance field=.[1]}
+						<td>{[field]}</td>
+					{/instance}
+    			{/fields}
+			</tr>
+		{/instances}
+	</tbody>
+</table>
