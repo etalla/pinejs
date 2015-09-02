@@ -574,7 +574,8 @@ exports.handleODataRequest = handleODataRequest = (req, res, next) ->
 		# If the err is an error object then use its message instead - it should be more readable!
 		if err instanceof Error
 			err = err.message
-		res.json(err, 404)
+
+		res.json(err, err.statusCode ? 404)
 
 # This is a helper method to handle using a passed in req.tx when available, or otherwise creating a new tx and cleaning up after we're done.
 runTransaction = (req, request, callback) ->
