@@ -1,3 +1,5 @@
+* Throw error if trying to send an empty PATCH request.
+
 V1.0.2
 
 * Updated to lodash 4

@@ -27,6 +27,9 @@ exports.parseODataURI = (req) -> Promise.try ->
 		console.log('Failed to parse url: ', method, url, e, e.stack)
 		throw new ParsingError('Failed to parse url')
 
+	if method is 'PATCH' and Object.keys(body).length is 0
+		throw new ParsingError('Cannot PATCH without setting any values')
+
 	return [{
 		method
 		vocabulary: apiRoot
