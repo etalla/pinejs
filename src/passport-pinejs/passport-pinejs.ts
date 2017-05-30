@@ -1,6 +1,7 @@
 import * as _express from 'express'
 import * as _passport from 'passport'
 import * as _passportLocal from 'passport-local'
+import * as _configLoader from '../config-loader/config-loader'
 
 import * as Promise from 'bluebird'
 const permissions = require('../sbvr-api/permissions')
@@ -24,7 +25,7 @@ export const checkPassword: _passportLocal.VerifyFunction = (username, password,
 	.catchReturn(false)
 	.asCallback(done)
 
-const setup = (app: _express.Application) => {
+const setup: _configLoader.SetupFunction = (app) => {
 	if (!process.browser) {
 		const passport: typeof _passport = require('passport')
 		app.use(passport.initialize())
@@ -88,7 +89,7 @@ const setup = (app: _express.Application) => {
 	return Promise.resolve()
 }
 
-export const config = {
+export const config: _configLoader.Config = {
 	models: [{
 		customServerCode: { setup },
 	}],
