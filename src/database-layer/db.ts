@@ -1,6 +1,7 @@
 /// <references types="websql"/>
 import * as _mysql from 'mysql'
 import * as _pg from 'pg'
+import * as _AbstractSQLCompiler from '@resin/abstract-sql-compiler'
 
 import * as _ from 'lodash'
 import * as Promise from 'bluebird'
@@ -18,10 +19,10 @@ type CreateTransactionFn = (
 	stackTraceErr: Error,
 ) => Promise<Tx> | void
 type CloseTransactionFn = () => void
-interface Row {
+export interface Row {
 	[fieldName: string]: any
 }
-interface Result {
+export interface Result {
 	rows: {
 		length: number
 		item: (i: number) => Row
@@ -43,7 +44,7 @@ const isSqlError = (value: any): value is SQLError => {
 	return value != null && value.constructor != null && value.constructor.name === 'SQLError'
 }
 
-class DatabaseError extends TypedError {
+export class DatabaseError extends TypedError {
 	public code: number | string
 	constructor(message?: string | CodedError | SQLError) {
 		if (isSqlError(message)) {
@@ -91,13 +92,13 @@ const alwaysExport = {
 	ForeignKeyConstraintError,
 }
 export type Database = typeof alwaysExport & {
-	engine: string
+	engine: keyof typeof _AbstractSQLCompiler.Engines
 	executeSql: typeof atomicExecuteSql
 	transaction: (callback?: ((tx: Tx) => void)) => Promise<Tx>
 }
 
 export const engines: {
-	[engine: string]: (connectString: string | object) => Database
+	[engine in _AbstractSQLCompiler.Engines]?: (connectString: string | object) => Database
 } = {}
 
 const atomicExecuteSql = function(this: Database, sql: Sql, bindings?: Bindings, callback?: Callback<Result>) {
@@ -342,7 +343,7 @@ if (maybePg != null) {
 			}
 		}
 		return _.extend({
-			engine: 'postgres',
+			engine: _AbstractSQLCompiler.Engines.postgres,
 			executeSql: atomicExecuteSql,
 			transaction: createTransaction((resolve, _reject, stackTraceErr) => {
 				pool.connect((err, client, done) => {
@@ -443,7 +444,7 @@ if (maybeMysql != null) {
 		}
 
 		return _.extend({
-			engine: 'mysql',
+			engine: _AbstractSQLCompiler.Engines.mysql,
 			executeSql: atomicExecuteSql,
 			transaction: createTransaction((resolve, _reject, stackTraceErr) => {
 				pool.getConnection((err, db) => {
@@ -587,7 +588,7 @@ if (typeof window !== 'undefined' && window.openDatabase != null) {
 		}
 
 		return _.extend({
-			engine: 'websql',
+			engine: _AbstractSQLCompiler.Engines.websql,
 			executeSql: atomicExecuteSql,
 			transaction: createTransaction((resolve, _reject, stackTraceErr) => {
 				db.transaction((tx) => {
@@ -598,9 +599,10 @@ if (typeof window !== 'undefined' && window.openDatabase != null) {
 	}
 }
 
-export const connect = (databaseOptions: { engine: string, params: {} }) => {
-	if (engines[databaseOptions.engine] == null) {
+export const connect = (databaseOptions: { engine: keyof typeof _AbstractSQLCompiler.Engines, params: {} }) => {
+	const engine = engines[databaseOptions.engine]
+	if (engine == null) {
 		throw new Error('Unsupported database engine: ' + databaseOptions.engine)
 	}
-	return engines[databaseOptions.engine](databaseOptions.params)
+	return engine(databaseOptions.params)
 }

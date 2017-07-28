@@ -28,7 +28,8 @@ import * as dbModule from '../database-layer/db'
 const configLoader = require('../config-loader/config-loader')
 import * as migrator from '../migrator/migrator'
 
-export const sbvrUtils = require('../sbvr-api/sbvr-utils')
+import * as sbvrUtils from '../sbvr-api/sbvr-utils'
+export { sbvrUtils as sbvrUtils }
 export const SessionStore = require('../pinejs-session-store/pinejs-session-store')
 
 let databaseOptions: {
@@ -60,7 +61,7 @@ if (dbModule.engines.websql != null) {
 const db = dbModule.connect(databaseOptions)
 
 export const init = (app: _express.Application, config?: any) =>
-	(sbvrUtils.setup(app, db) as Promise<any>)
+	sbvrUtils.setup(app, db)
 	.then(() => {
 		const cfgLoader = configLoader.setup(app)
 		return cfgLoader.loadConfig(migrator.config)

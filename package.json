@@ -2,6 +2,7 @@
   "name": "@resin/pinejs",
   "version": "5.2.13",
   "main": "out/server-glue/module",
+  "types": "src/server-glue/module",
   "repository": "git@github.com:resin-io/pinejs.git",
   "license": "Apache-2.0",
   "scripts": {
@@ -13,7 +14,7 @@
     "test": "npm run lint && npm run build"
   },
   "dependencies": {
-    "@resin/abstract-sql-compiler": "^3.0.0",
+    "@resin/abstract-sql-compiler": "^3.1.0",
     "@resin/lf-to-abstract-sql": "^1.0.3",
     "@resin/odata-parser": "~0.2.0",
     "@resin/odata-to-abstract-sql": "^1.0.0",
