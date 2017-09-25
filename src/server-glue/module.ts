@@ -26,7 +26,7 @@ if (!process.browser) {
 import * as Promise from 'bluebird'
 import * as dbModule from '../database-layer/db'
 const configLoader = require('../config-loader/config-loader')
-const migrator = require('../migrator/migrator')
+import * as migrator from '../migrator/migrator'
 
 export const sbvrUtils = require('../sbvr-api/sbvr-utils')
 export const SessionStore = require('../pinejs-session-store/pinejs-session-store')
