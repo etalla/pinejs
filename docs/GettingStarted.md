@@ -23,7 +23,7 @@ $ npm init
 
 Feel free to enter any information you like for your application when prompted, like application name, version, description, etc. The above command will initialize your application by creating the `package.json` file.
 
-Currently, Pine.js constitutes an internal framework of resin, and thus lying in a private repository. In order to install it as a dependency for your application you will have either to use resin's development environment, or to contact our Operations Manager, in order to give you the necessary credentials to grab it from npm. Assuming you have those credentials, type in your command prompt inside your application directory:
+Type in your command prompt inside your application directory:
 
 ```
 $ npm login
